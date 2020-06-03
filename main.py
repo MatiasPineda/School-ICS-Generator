@@ -52,6 +52,10 @@ class IcsGenerator:
         for event_day in self.get_dates():
             self.c.events.add(self.generate_event(event_day))
 
+    def create_ics_file(self):
+        with open('calendar.ics','w') as file:
+            file.writelines(self.c)
+
 
 a = "12-04-2020"
 t = "14:21"
@@ -80,3 +84,23 @@ print("---------------")
 
 for i in holiday_list:
     print(i)
+
+print("---------------")
+
+name = input("name")
+start = input("start date yyyy-mm-dd")
+end = input("end date yyyy-mm-dd")
+days=[]
+while True:
+    d = (input("day of week (0-6)"))
+    if d==""  or int(d)<0 or int(d)>6:
+        break
+    days.append(int(d))
+start_time = input("Start time (hh:mm)")
+duration = input("Event duration (hh:mm)")
+details = input("event description")
+
+generate = IcsGenerator(name, start, end, days, start_time, duration, details)
+
+generate.add_to_calendar()
+generate.create_ics_file()
